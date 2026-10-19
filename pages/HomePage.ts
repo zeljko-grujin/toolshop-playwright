@@ -15,6 +15,7 @@ export class HomePage {
     readonly searchCaption: Locator;
     readonly searchCompleted: Locator;
     readonly noResults: Locator;
+    //Product list
     readonly productNames: Locator;
 
     constructor(page: Page) {
@@ -62,5 +63,13 @@ export class HomePage {
         //Number(...) pretvori text u broj
         //text.replace('$','') zameni $ praznim textom, tj obrisi ga
         //Svaku cenu pretvori iz teksta u broj i vrati listu brojeva
+    }
+
+    async openProduct(productName: string) {
+        await this.page.getByRole('heading', { name: productName, exact: true }).click();
+        //this.page.getByRole  nadji element po ulozi i imenu
+        //'heading'  Uloga:naslov. Ime proizvoda na kartici je mali naslov (u HTML-u <h5>)
+        //name: productName Ono sto test posalje za ime, parametar f-je
+        //exact: true  Ime mora da bude tacno to, a ne samo da ga sadrzi.
     }
 };

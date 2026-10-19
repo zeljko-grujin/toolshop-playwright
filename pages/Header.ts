@@ -11,6 +11,9 @@ export class Header {
     readonly userMenu: Locator;
     readonly signOutLink: Locator;
     readonly signInLink: Locator;
+    //Cart
+    readonly cartLink: Locator;
+    readonly cartQuantity: Locator;
 
     constructor(page: Page) {
         this.page = page;
@@ -23,6 +26,9 @@ export class Header {
         this.userMenu = page.getByTestId('nav-menu');
         this.signOutLink = page.getByTestId('nav-sign-out');
         this.signInLink = page.getByTestId('nav-sign-in');
+
+        this.cartLink = page.getByTestId('nav-cart');
+        this.cartQuantity = page.getByTestId('cart-quantity');
     }
 
     async logout() {
@@ -37,5 +43,9 @@ export class Header {
 
     async goToContact() {
         await this.contactLink.click();
+    }
+
+    async openCart() {
+        await this.cartLink.click();
     }
 }

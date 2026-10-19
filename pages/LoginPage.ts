@@ -26,6 +26,5 @@ export class LoginPage {                      //Create the LoginPage class
         await this.emailInput.fill(email);
         await this.passwordInput.fill(password);
         await this.loginButton.click();
-
     }
 }
