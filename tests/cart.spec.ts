@@ -67,10 +67,10 @@ test.describe('Product page and cart', () => {
 test('does not allow adding a product that is out of stock', async ({ page }) => {
     let homePage = new HomePage(page);
     let productPage = new ProductPage(page);
-    const testProduct1 = 'Long Nose Pliers';
+    const outOfStockProduct = 'Long Nose Pliers';
 
     await homePage.goto();
-    await homePage.openProduct(testProduct1);
+    await homePage.openProduct(outOfStockProduct);
 
     await expect(productPage.outOfStockMessage).toHaveText('Out of stock');
     await expect(productPage.addToCartButton).toBeDisabled();
