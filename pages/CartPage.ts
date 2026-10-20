@@ -7,6 +7,9 @@ export class CartPage {
     readonly cartTotal: Locator;
     readonly removeButtons: Locator;
     readonly emptyCartMessage: Locator;
+    readonly proceedToCheckoutButton: Locator;
+    readonly continueShoppingButton: Locator;
+
 
 
     constructor(page: Page) {
@@ -16,5 +19,7 @@ export class CartPage {
         this.cartTotal = page.getByTestId('cart-total');
         this.removeButtons = page.locator('.btn-danger');
         this.emptyCartMessage = page.getByText('The cart is empty. Nothing to display.');
+        this.proceedToCheckoutButton = page.getByTestId('proceed-1');
+        this.continueShoppingButton = page.getByTestId('continue-shopping');
     }
 }

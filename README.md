@@ -15,6 +15,7 @@ Written in TypeScript with Playwright, using the Page Object Model.
 - **Search** – only matching products are shown; a message is shown when nothing matches; search ignores case; the reset button shows all products again
 - **Sorting and filters** – products are sorted by name (A–Z, Z–A) and by price (low to high, high to low); the category filter shows only products from the selected category, also after sorting
 - **Product page and cart** – the product page shows the right name and price; a product can be added to the cart (also several pieces at once); the cart shows the product, its quantity and the total; a product can be removed from the cart; a product that is out of stock cannot be added
+- **Checkout** – a guest can check out without an account; the billing address is filled in automatically from the postal code; a guest can place an order and gets an invoice number; the cart is empty after the order
 
 ## Tech stack
 
@@ -25,8 +26,8 @@ Written in TypeScript with Playwright, using the Page Object Model.
 ## Project structure
 
 ```
-pages/      page objects (LoginPage, AccountPage, HomePage, CategoryPage, ProductPage, CartPage, Header)
-tests/      test files (login, account, navigation, search, sort-filter, cart)
+pages/      page objects (LoginPage, AccountPage, HomePage, CategoryPage, ProductPage, CartPage, CheckoutPage, Header)
+tests/      test files (login, account, navigation, search, sort-filter, cart, checkout)
 .github/    GitHub Actions workflow
 ```
 
@@ -55,6 +56,6 @@ The site is protected by Cloudflare, which sometimes blocks direct page loads fr
 
 ## Next steps
 
-- Checkout tests
+- Fixtures for page objects
 - Reusing the logged-in state between tests
 - API tests

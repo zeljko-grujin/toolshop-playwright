@@ -5,7 +5,7 @@ import { CartPage } from '../pages/CartPage';
 import { HomePage } from '../pages/HomePage';
 
 test.describe('Product page and cart', () => {
-    const testProduct1 = 'Combination Pliers';
+    const testProduct = 'Combination Pliers';
     let homePage: HomePage;
     let productPage: ProductPage;
     let header: Header;
@@ -17,12 +17,12 @@ test.describe('Product page and cart', () => {
         cartPage = new CartPage(page);
         productPage = new ProductPage(page);
         await homePage.goto();
-        await homePage.openProduct('Combination Pliers');
+        await homePage.openProduct(testProduct);
         await expect(page).toHaveURL(/product/);
     });
 
     test('shows the product name and price', async () => {
-        await expect(productPage.productName).toHaveText(testProduct1);
+        await expect(productPage.productName).toHaveText(testProduct);
         await expect(productPage.unitPrice).toHaveText('14.15');
     });
 
@@ -39,7 +39,7 @@ test.describe('Product page and cart', () => {
         await expect(header.cartQuantity).toHaveText('1');
 
         await header.openCart();
-        await expect(cartPage.productTitles).toHaveText(testProduct1);
+        await expect(cartPage.productTitles).toHaveText(testProduct);
         await expect(cartPage.productQuantities).toHaveValue('1');
         await expect(cartPage.cartTotal).toHaveText('$14.15');
     });
@@ -67,9 +67,10 @@ test.describe('Product page and cart', () => {
 test('does not allow adding a product that is out of stock', async ({ page }) => {
     let homePage = new HomePage(page);
     let productPage = new ProductPage(page);
+    const testProduct1 = 'Long Nose Pliers';
 
     await homePage.goto();
-    await homePage.openProduct('Long Nose Pliers');
+    await homePage.openProduct(testProduct1);
 
     await expect(productPage.outOfStockMessage).toHaveText('Out of stock');
     await expect(productPage.addToCartButton).toBeDisabled();
