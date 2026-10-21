@@ -20,13 +20,14 @@ Written in TypeScript with Playwright, using the Page Object Model.
 ## Tech stack
 
 - [Playwright Test](https://playwright.dev) with TypeScript
-- Page Object Model
+- Page Object Model, with page objects given to tests as Playwright fixtures
 - GitHub Actions (CI)
 
 ## Project structure
 
 ```
 pages/      page objects (LoginPage, AccountPage, HomePage, CategoryPage, ProductPage, CartPage, CheckoutPage, Header)
+fixtures/   Playwright fixtures that give each test ready page object
 tests/      test files (login, account, navigation, search, sort-filter, cart, checkout)
 .github/    GitHub Actions workflow
 ```
@@ -56,6 +57,5 @@ The site is protected by Cloudflare, which sometimes blocks direct page loads fr
 
 ## Next steps
 
-- Fixtures for page objects
 - Reusing the logged-in state between tests
 - API tests

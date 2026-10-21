@@ -1,15 +1,12 @@
-import { test, expect } from '@playwright/test';
-import { HomePage } from '../pages/HomePage';
+import { test, expect } from '../fixtures/pages';
 
 test.describe('Sort products', () => {
-    let homePage: HomePage;
 
-    test.beforeEach(async ({ page }) => {
-        homePage = new HomePage(page);
+    test.beforeEach(async ({ homePage }) => {
         await homePage.goto();
     });
 
-    test('by name from A to Z', async () => {
+    test('by name from A to Z', async ({ homePage }) => {
         await homePage.sortBy('Name (A - Z)');
 
         const names = await homePage.productNames.allInnerTexts();
@@ -18,7 +15,7 @@ test.describe('Sort products', () => {
         expect(names).toEqual(sortedNames);  //za liste uvek koristimo toEqual, pita da li je u listama isti sadrzaj
     });
 
-    test('by name from Z to A', async () => {
+    test('by name from Z to A', async ({ homePage }) => {
         await homePage.sortBy('Name (Z - A)');
 
         const names = await homePage.productNames.allInnerTexts();
@@ -27,7 +24,7 @@ test.describe('Sort products', () => {
         expect(names).toEqual(sortedNames);
     });
 
-    test('by price from low to high', async () => {
+    test('by price from low to high', async ({ homePage }) => {
         await homePage.sortBy('Price (Low - High)');
 
         const prices = await homePage.getPrices();
@@ -36,7 +33,7 @@ test.describe('Sort products', () => {
         expect(prices).toEqual(sortedPrices);
     });
 
-    test('by price from high to low', async () => {
+    test('by price from high to low', async ({ homePage }) => {
         await homePage.sortBy('Price (High - Low)');
 
         const prices = await homePage.getPrices();
@@ -47,14 +44,12 @@ test.describe('Sort products', () => {
 });
 
 test.describe('Filter', () => {
-    let homePage: HomePage;
 
-    test.beforeEach(async ({ page }) => {
-        homePage = new HomePage(page);
+    test.beforeEach(async ({ homePage }) => {
         await homePage.goto();
     });
 
-    test('shows only hammers when the Hammer category is selected', async () => {
+    test('shows only hammers when the Hammer category is selected', async ({ homePage }) => {
         await homePage.filterByCategory('Hammer');
 
         const names = await homePage.productNames.allInnerTexts();
@@ -65,7 +60,7 @@ test.describe('Filter', () => {
         }
     });
 
-    test('sort hammers by price from low to high', async () => {
+    test('sort hammers by price from low to high', async ({ homePage }) => {
         await homePage.filterByCategory('Hammer');
 
         const names = await homePage.productNames.allInnerTexts();

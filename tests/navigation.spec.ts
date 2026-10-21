@@ -1,34 +1,26 @@
-import { test, expect } from "@playwright/test";
-import { HomePage } from "../pages/HomePage";
-import { Header } from "../pages/Header";
-import { CategoryPage } from "../pages/CategoryPage";
+import { test, expect } from '../fixtures/pages';
 
 test.describe('Navigation', () => {
-    let header: Header;
 
-    test.beforeEach(async ({ page }) => {
-        const homePage = new HomePage(page);
-        header = new Header(page);
+    test.beforeEach(async ({ homePage }) => {
         await homePage.goto();
     });
 
-    test('can open Hand Tools from the categories menu', async ({ page }) => {
-        const categoryPage = new CategoryPage(page);
+    test('can open Hand Tools from the categories menu', async ({ page, header, categoryPage }) => {
 
         await header.goToHandTools();
         await expect(page).toHaveURL(/hand-tools/);
         await expect(categoryPage.pageTitle).toHaveText('Category: Hand Tools');
     });
 
-    test('can open a category directly by its address', async ({ page }) => {
+    test('can open a category directly by its address', async ({ page, categoryPage }) => {
         test.skip(!!process.env.CI, 'Cloudflare blocks direct page loads from GitHub Actions (403)');
-        const categoryPage = new CategoryPage(page);
         await categoryPage.goto('power-tools');
         await expect(page).toHaveURL('/category/power-tools');
         await expect(categoryPage.pageTitle).toHaveText('Category: Power Tools');
     });
 
-    test('can open the contact page from the header', async ({ page }) => {
+    test('can open the contact page from the header', async ({ page, header }) => {
         await header.goToContact();
         await expect(page).toHaveURL('/contact')
     });

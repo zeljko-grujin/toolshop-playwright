@@ -1,39 +1,27 @@
-import { test, expect } from '@playwright/test';
-import { ProductPage } from '../pages/ProductPage';
-import { Header } from '../pages/Header';
-import { CartPage } from '../pages/CartPage';
-import { HomePage } from '../pages/HomePage';
+import { test, expect } from '../fixtures/pages';
 
 test.describe('Product page and cart', () => {
     const testProduct = 'Combination Pliers';
-    let homePage: HomePage;
-    let productPage: ProductPage;
-    let header: Header;
-    let cartPage: CartPage;
 
-    test.beforeEach(async ({ page }) => {
-        homePage = new HomePage(page);
-        header = new Header(page);
-        cartPage = new CartPage(page);
-        productPage = new ProductPage(page);
+    test.beforeEach(async ({ page, homePage }) => {
         await homePage.goto();
         await homePage.openProduct(testProduct);
         await expect(page).toHaveURL(/product/);
     });
 
-    test('shows the product name and price', async () => {
+    test('shows the product name and price', async ({ productPage }) => {
         await expect(productPage.productName).toHaveText(testProduct);
         await expect(productPage.unitPrice).toHaveText('14.15');
     });
 
-    test('adds a product to the cart', async () => {
+    test('adds a product to the cart', async ({ productPage, header }) => {
         await productPage.addToCart();
 
         await expect(productPage.addedToCartMessage).toBeVisible();
         await expect(header.cartQuantity).toHaveText('1');
     });
 
-    test('shows the added product in the cart', async () => {
+    test('shows the added product in the cart', async ({ productPage, header, cartPage }) => {
         await productPage.addToCart();
 
         await expect(header.cartQuantity).toHaveText('1');
@@ -44,7 +32,7 @@ test.describe('Product page and cart', () => {
         await expect(cartPage.cartTotal).toHaveText('$14.15');
     });
 
-    test('adds three pieces of a product to the cart', async () => {
+    test('adds three pieces of a product to the cart', async ({ productPage, header, cartPage }) => {
         await productPage.quantityInput.fill('3');
         await productPage.addToCart();
         await expect(header.cartQuantity).toHaveText('3');
@@ -53,7 +41,7 @@ test.describe('Product page and cart', () => {
         await expect(cartPage.cartTotal).toHaveText('$42.45');
     });
 
-    test('removes a product from the cart', async () => {
+    test('removes a product from the cart', async ({ productPage, header, cartPage }) => {
         await productPage.addToCart();
         await expect(header.cartQuantity).toHaveText('1');
         await header.openCart();
@@ -64,9 +52,7 @@ test.describe('Product page and cart', () => {
     });
 });
 
-test('does not allow adding a product that is out of stock', async ({ page }) => {
-    let homePage = new HomePage(page);
-    let productPage = new ProductPage(page);
+test('does not allow adding a product that is out of stock', async ({ homePage, productPage }) => {
     const outOfStockProduct = 'Long Nose Pliers';
 
     await homePage.goto();

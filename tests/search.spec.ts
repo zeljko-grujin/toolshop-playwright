@@ -1,15 +1,12 @@
-import { test, expect } from '@playwright/test';
-import { HomePage } from '../pages/HomePage';
+import { test, expect } from '../fixtures/pages';
 
 test.describe('Search', () => {
-    let homePage: HomePage;
 
-    test.beforeEach(async ({ page }) => {
-        homePage = new HomePage(page);
+    test.beforeEach(async ({ homePage }) => {
         await homePage.goto();
     });
 
-    test('shows only products that match the search term', async () => {
+    test('shows only products that match the search term', async ({ homePage }) => {
         await homePage.search('pliers');
         await expect(homePage.searchCaption).toHaveText('Searched for: pliers');
 
@@ -20,14 +17,14 @@ test.describe('Search', () => {
         }                                              //toLowerCase() converts the name to lowercase
     });
 
-    test('shows a message when no product matches', async () => {
+    test('shows a message when no product matches', async ({ homePage }) => {
         await homePage.search('Zeljko');
         await expect(homePage.searchCaption).toHaveText('Searched for: Zeljko');
         await expect(homePage.noResults).toHaveText('There are no products found.')
         await expect(homePage.productNames).toHaveCount(0);
     });
 
-    test('shows only hammers when searching for hammers', async () => {
+    test('shows only hammers when searching for hammers', async ({ homePage }) => {
         await homePage.search('hammer')
         await expect(homePage.searchCaption).toHaveText('Searched for: hammer');
 
@@ -38,7 +35,7 @@ test.describe('Search', () => {
         }
     });
 
-    test('ignore upper and lower case', async () => {
+    test('ignore upper and lower case', async ({ homePage }) => {
         await homePage.search('PLIERS');
         await expect(homePage.searchCaption).toHaveText('Searched for: PLIERS')
 
@@ -49,7 +46,7 @@ test.describe('Search', () => {
         }
     });
 
-    test('shows all products again after the search is reset', async () => {
+    test('shows all products again after the search is reset', async ({ homePage }) => {
         await homePage.search('pliers');
         await expect(homePage.searchCaption).toHaveText('Searched for: pliers')
         await homePage.resetSearch();
