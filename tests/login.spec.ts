@@ -2,7 +2,7 @@ import { test, expect } from '../fixtures/pages';
 
 test.describe('Login', () => { //start of the test group
 
-    test.beforeEach(async ({ loginPage }) => {   //runs before each test  *(page) is a new browser tab that Playwright opens for each test and gives to us
+    test.beforeEach(async ({ loginPage }) => {   //runs before each test  *(loginPage) is a LoginPage object that our fixture creates for each test and gives to us
         await loginPage.goto();
     });
 

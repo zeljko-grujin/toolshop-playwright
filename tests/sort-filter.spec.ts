@@ -12,7 +12,7 @@ test.describe('Sort products', () => {
         const names = await homePage.productNames.allInnerTexts();
         expect(names.length).toBeGreaterThan(1); //proveri da na stranici ima barem 2 proizvoda
         const sortedNames = [...names].sort(); //[...names] pravi kopiju liste names  sort() poredja listu kao text po abecedi od A do Z
-        expect(names).toEqual(sortedNames);  //za liste uvek koristimo toEqual, pita da li je u listama isti sadrzaj
+        expect(names).toEqual(sortedNames);  //za liste uvek koristimo toEqual, pita da li je u listama isti sadrzajj
     });
 
     test('by name from Z to A', async ({ homePage }) => {

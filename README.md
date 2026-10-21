@@ -27,7 +27,7 @@ Written in TypeScript with Playwright, using the Page Object Model.
 
 ```
 pages/      page objects (LoginPage, AccountPage, HomePage, CategoryPage, ProductPage, CartPage, CheckoutPage, Header)
-fixtures/   Playwright fixtures that give each test ready page object
+fixtures/   Playwright fixtures that give each test ready page objects
 tests/      test files (login, account, navigation, search, sort-filter, cart, checkout)
 .github/    GitHub Actions workflow
 ```
