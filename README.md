@@ -21,6 +21,7 @@ Written in TypeScript with Playwright, using the Page Object Model.
 
 - [Playwright Test](https://playwright.dev) with TypeScript
 - Page Object Model, with page objects given to tests as Playwright fixtures
+- Login is done once, in setup project; tests that need a logged-in user reuse the saved state (storageState)
 - GitHub Actions (CI)
 
 ## Project structure
@@ -28,7 +29,7 @@ Written in TypeScript with Playwright, using the Page Object Model.
 ```
 pages/      page objects (LoginPage, AccountPage, HomePage, CategoryPage, ProductPage, CartPage, CheckoutPage, Header)
 fixtures/   Playwright fixtures that give each test ready page objects
-tests/      test files (login, account, navigation, search, sort-filter, cart, checkout)
+tests/      test files (login, account, navigation, search, sort-filter, cart, checkout) and the login setup (auth.setup.ts)
 .github/    GitHub Actions workflow
 ```
 
@@ -52,10 +53,10 @@ npx playwright show-report
 
 Tests run on GitHub Actions on every push and pull request to `main`.
 Toolshop rejects logins coming from GitHub Actions servers (the login request returns 401, found with the Playwright trace viewer),
-so tests that need a logged-in user are skipped on CI and run locally.
+so the login setup and tests that need a logged-in user are skipped on CI and run locally.
 The site is protected by Cloudflare, which sometimes blocks direct page loads from GitHub Actions servers (403), so the test that opens a category by its address is also skipped on CI.
 
 ## Next steps
 
-- Reusing the logged-in state between tests
+- Test data in one place
 - API tests
