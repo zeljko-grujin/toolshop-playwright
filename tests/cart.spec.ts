@@ -1,6 +1,5 @@
 import { test, expect } from '../fixtures/pages';
 import { products } from '../test-data/products';
-import { users } from '../test-data/users';
 
 test.describe('Product page and cart', () => {
     const testProduct = products.combinationPliers;

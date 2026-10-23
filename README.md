@@ -21,7 +21,7 @@ Written in TypeScript with Playwright, using the Page Object Model.
 
 - [Playwright Test](https://playwright.dev) with TypeScript
 - Page Object Model, with page objects given to tests as Playwright fixtures
-- Login is done once, in setup project; tests that need a logged-in user reuse the saved state (storageState)
+- Login is done once, in a setup project; tests that need a logged-in user reuse the saved state (storageState)
 - Test data in one place (`test-data/`); the password is read from a local `.env` file that is not committed
 - Data-driven test: one search test runs for several search terms
 - GitHub Actions (CI)
