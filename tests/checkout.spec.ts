@@ -1,4 +1,5 @@
 import { test, expect } from '../fixtures/pages';
+import { products } from '../test-data/products';
 
 test.describe('Checkout process', () => {
     const email = 'jack@example.com';
@@ -8,18 +9,18 @@ test.describe('Checkout process', () => {
     const postalCode = '10001';
     const houseNumber = '1';
     test.beforeEach(async ({ page, homePage, productPage, header, cartPage }) => {
-        const testProduct = 'Bolt Cutters';
+        const testProduct = products.boltCutters;
 
         await homePage.goto();
-        await homePage.openProduct(testProduct);
+        await homePage.openProduct(testProduct.name);
         await expect(page).toHaveURL(/product/);
         await productPage.addToCart();
         await expect(productPage.addedToCartMessage).toBeVisible();
         await expect(header.cartQuantity).toHaveText('1');
         await header.cartLink.click();
         await expect(page).toHaveURL('/checkout');
-        await expect(cartPage.productTitles).toHaveText(testProduct);
-        await expect(cartPage.cartTotal).toHaveText('$48.41');
+        await expect(cartPage.productTitles).toHaveText(testProduct.name);
+        await expect(cartPage.cartTotal).toHaveText('$' + testProduct.price);
         await cartPage.proceedToCheckoutButton.click();
     });
 

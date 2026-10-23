@@ -1,4 +1,5 @@
 import { test, expect } from '../fixtures/pages';
+import { users } from '../test-data/users';
 
 test.describe('Guest', () => {
     test('is redirected to login when opening the account page', async ({ page, accountPage }) => {
@@ -20,7 +21,7 @@ test.describe('logged-in user', () => {
     });
 
     test('sees their name in the header', async ({ header }) => {
-        await expect(header.userMenu).toHaveText('Jack Howe');
+        await expect(header.userMenu).toHaveText(users.customer.fullName);
     });
 
     test('can logout', async ({ page, header }) => {

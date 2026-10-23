@@ -1,17 +1,19 @@
 import { test, expect } from '../fixtures/pages';
+import { products } from '../test-data/products';
+import { users } from '../test-data/users';
 
 test.describe('Product page and cart', () => {
-    const testProduct = 'Combination Pliers';
+    const testProduct = products.combinationPliers;
 
     test.beforeEach(async ({ page, homePage }) => {
         await homePage.goto();
-        await homePage.openProduct(testProduct);
+        await homePage.openProduct(testProduct.name);
         await expect(page).toHaveURL(/product/);
     });
 
     test('shows the product name and price', async ({ productPage }) => {
-        await expect(productPage.productName).toHaveText(testProduct);
-        await expect(productPage.unitPrice).toHaveText('14.15');
+        await expect(productPage.productName).toHaveText(testProduct.name);
+        await expect(productPage.unitPrice).toHaveText(testProduct.price);
     });
 
     test('adds a product to the cart', async ({ productPage, header }) => {
@@ -27,9 +29,9 @@ test.describe('Product page and cart', () => {
         await expect(header.cartQuantity).toHaveText('1');
 
         await header.openCart();
-        await expect(cartPage.productTitles).toHaveText(testProduct);
+        await expect(cartPage.productTitles).toHaveText(testProduct.name);
         await expect(cartPage.productQuantities).toHaveValue('1');
-        await expect(cartPage.cartTotal).toHaveText('$14.15');
+        await expect(cartPage.cartTotal).toHaveText('$' + testProduct.price);
     });
 
     test('adds three pieces of a product to the cart', async ({ productPage, header, cartPage }) => {
@@ -53,10 +55,10 @@ test.describe('Product page and cart', () => {
 });
 
 test('does not allow adding a product that is out of stock', async ({ homePage, productPage }) => {
-    const outOfStockProduct = 'Long Nose Pliers';
+    const outOfStockProduct = products.longNosePliers;
 
     await homePage.goto();
-    await homePage.openProduct(outOfStockProduct);
+    await homePage.openProduct(outOfStockProduct.name);
 
     await expect(productPage.outOfStockMessage).toHaveText('Out of stock');
     await expect(productPage.addToCartButton).toBeDisabled();
