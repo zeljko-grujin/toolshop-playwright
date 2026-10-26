@@ -30,6 +30,8 @@ export default defineConfig({
     baseURL: 'https://practicesoftwaretesting.com',
     testIdAttribute: 'data-test',
     trace: 'retain-on-failure',
+    screenshot: 'only-on-failure',
+    video: 'retain-on-failure',
   },
 
   /* Configure projects for major browsers */
