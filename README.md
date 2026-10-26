@@ -26,7 +26,7 @@ Written in TypeScript with Playwright, using the Page Object Model.
 - Login is done once, in a setup project. Tests that need a logged-in user reuse the saved state (storageState)
 - Test data in one place (`test-data/`). The password is read from a local `.env` file that is not committed
 - Data-driven test: one search test runs for several search terms
-- GitHub Actions for CI, with the HTML report published to GitHub Pages
+- GitHub Actions for CI (also runs every morning), with the HTML report published to GitHub Pagesgit
 
 ## Project structure
 
@@ -68,7 +68,7 @@ npx playwright show-report
 
 ## CI
 
-Tests run on GitHub Actions on every push and pull request to `main`.
+Tests run on GitHub Actions on every push and pull request to `main`, and every morning at 7:15 (Belgrade time).
 You can also start them by hand: **Actions → Playwright Tests → Run workflow**.
 After each run on `main`, the HTML report is published to GitHub Pages (link at the top). For a failed test the report has a screenshot, a video and a trace.
 
