@@ -26,7 +26,7 @@ Written in TypeScript with Playwright, using the Page Object Model.
 - Login is done once, in a setup project. Tests that need a logged-in user reuse the saved state (storageState)
 - Test data in one place (`test-data/`). The password is read from a local `.env` file that is not committed
 - Data-driven test: one search test runs for several search terms
-- GitHub Actions for CI (also runs every morning), with the HTML report published to GitHub Pagesgit
+- GitHub Actions for CI (also runs every morning), with the HTML report published to GitHub Pages
 
 ## Project structure
 
