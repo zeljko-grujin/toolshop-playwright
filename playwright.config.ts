@@ -43,7 +43,13 @@ export default defineConfig({
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
+      testIgnore: /.*\.api\.spec\.ts/,
       dependencies: ['setup'],
+    },
+    {
+      name: 'api',
+      testMatch: /.*\.api\.spec\.ts/,
+      use: { baseURL: 'https://api.practicesoftwaretesting.com' },
     },
 
     /*{
