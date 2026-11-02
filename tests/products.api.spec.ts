@@ -10,7 +10,7 @@ test.describe('Products API', () => {
         expect(body.per_page).toBe(9);
         expect(body.data).toHaveLength(9);
         for (const product of body.data) {
-            expect(product.name).toBeTruthy;
+            expect(product.name).toBeTruthy();
             expect(product.price).toBeGreaterThan(0);
         }
     });
