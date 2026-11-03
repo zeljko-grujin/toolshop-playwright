@@ -1,7 +1,5 @@
 import { test, expect } from '../fixtures/pages';
-import { LoginPage } from '../pages/LoginPage';
 import { API_URL } from '../test-data/api';
-import { products } from '../test-data/products';
 
 type ApiProduct = {   //Opis proizvoda iz API-ja
     name: string;
@@ -42,5 +40,4 @@ test.describe('API and UI tests together', () => {
         await expect(page).toHaveURL(/account/);
         await expect(header.userMenu).toHaveText(`${newUser.first_name} ${newUser.last_name}`);
     });
-
 });
