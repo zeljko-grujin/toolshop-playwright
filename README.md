@@ -19,6 +19,7 @@ Written in TypeScript with Playwright, using the Page Object Model.
 - **Product page and cart:** the product page shows the right name and price; a product can be added to the cart (also several pieces at once); the cart shows the product, its quantity and the total; a product can be removed from the cart; a product that is out of stock can't be added
 - **Checkout:** a guest can check out without an account; the billing address is filled in automatically from the postal code; a guest can place an order and gets an invoice number; the cart is empty after the order
 - **API:** the products list, search, one product by its id and a 404 for a product that does not exist; a login with wrong credentials gets 401, and a login gives a token that works for `/users/me`
+- **API and UI together:** the home page shows the same products and prices as the API; a user created through the API can log in on the site
 
 ## Tech stack
 
@@ -28,6 +29,7 @@ Written in TypeScript with Playwright, using the Page Object Model.
 - Test data in one place (`test-data/`). The password is read from a local `.env` file that is not committed
 - Data-driven test: one search test runs for several search terms
 - API tests with Playwright's `request`, in their own project: no browser and no login setup
+- UI tests that also use the API: they get test data from the API or create it through the API
 - GitHub Actions for CI (also runs every morning), with the HTML report published to GitHub Pages
 
 ## Project structure
@@ -35,8 +37,8 @@ Written in TypeScript with Playwright, using the Page Object Model.
 ```
 pages/      page objects (LoginPage, AccountPage, HomePage, CategoryPage, ProductPage, CartPage, CheckoutPage, Header)
 fixtures/   Playwright fixtures that give each test ready page objects
-tests/      test files (login, account, navigation, search, sort-filter, cart, checkout), API tests (*.api.spec.ts) and the login setup (auth.setup.ts)
-test-data/  test data: accounts (users.ts) and products (products.ts)
+tests/      test files (login, account, navigation, search, sort-filter, cart, checkout, api-and-ui), API tests (*.api.spec.ts) and the login setup (auth.setup.ts)
+test-data/  test data: accounts (users.ts), products (products.ts) and the API address (api.ts)
 .github/    GitHub Actions workflow
 ```
 
@@ -75,9 +77,9 @@ You can also start them by hand: **Actions → Playwright Tests → Run workflow
 After each run on `main`, the HTML report is published to GitHub Pages (link at the top). For a failed test the report has a screenshot, a video and a trace.
 
 Toolshop rejects logins from GitHub Actions servers. The login request returns 401 (I found it with the Playwright trace viewer).
-That's why the login setup, the tests that need a logged-in user and the API login tests are skipped on CI and run only locally.
+That's why the login setup, the tests that need a logged-in user, the API login tests and the test that logs in with a user created through the API are skipped on CI and run only locally.
 The site is also behind Cloudflare, which sometimes blocks direct page loads from GitHub Actions (403), so the test that opens a category by its address is skipped on CI too.
 
 ## Next steps
 
-- Prepare test data through the API and fake API responses in UI tests
+- Fake API responses in UI tests (`page.route`)
