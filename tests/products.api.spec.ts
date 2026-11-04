@@ -1,11 +1,11 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('Products API', () => {
-    test('returns the first page of products', async ({ request }) => { //request Gotov fixure iy PW, salje HTTP zahteve bez browsera. Svaki test dobija svoj, kao page. Koristi baseURL iz projekta.
+    test('returns the first page of products', async ({ request }) => {
         const response = await request.get('/products');
         expect(response.status()).toBe(200);
 
-        const body = await response.json(); //Procitaj telo odgovora i od JSON-a napravi objekat   Pretvori odgovor u objekat body
+        const body = await response.json();
         expect(body.current_page).toBe(1);
         expect(body.per_page).toBe(9);
         expect(body.data).toHaveLength(9);

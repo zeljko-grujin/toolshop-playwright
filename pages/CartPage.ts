@@ -10,8 +10,6 @@ export class CartPage {
     readonly proceedToCheckoutButton: Locator;
     readonly continueShoppingButton: Locator;
 
-
-
     constructor(page: Page) {
         this.page = page;
         this.productTitles = page.getByTestId('product-title');

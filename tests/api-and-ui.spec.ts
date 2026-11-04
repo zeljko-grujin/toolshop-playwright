@@ -1,17 +1,17 @@
 import { test, expect } from '../fixtures/pages';
 import { API_URL } from '../test-data/api';
 
-type ApiProduct = {   //Opis proizvoda iz API-ja
+type ApiProduct = {
     name: string;
     price: number;
 };
 
 test.describe('API and UI tests together', () => {
     test('the home page shows the same products as the API', async ({ request, homePage }) => {
-        const response = await request.get(`${API_URL}/products`, { params: { between: 'price,1,100' } }); //Pitaj API za proizvode sa cenom od 1 do 100, isto kao sajt.
+        const response = await request.get(`${API_URL}/products`, { params: { between: 'price,1,100' } });
         expect(response.status()).toBe(200);
-        const apiProducts: ApiProduct[] = (await response.json()).data; //Prvo sacekaj json, pa uzmi listu proizvoda
-        const apiNames = apiProducts.map(product => product.name); //Od liste proizvoda napravi listu imena i cena.
+        const apiProducts: ApiProduct[] = (await response.json()).data;
+        const apiNames = apiProducts.map(product => product.name);
         const apiPrices = apiProducts.map(product => product.price);
 
         await homePage.goto();

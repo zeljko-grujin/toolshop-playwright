@@ -10,9 +10,9 @@ test.describe('Sort products', () => {
         await homePage.sortBy('Name (A - Z)');
 
         const names = await homePage.productNames.allInnerTexts();
-        expect(names.length).toBeGreaterThan(1); //proveri da na stranici ima barem 2 proizvoda
-        const sortedNames = [...names].sort(); //[...names] pravi kopiju liste names  sort() poredja listu kao text po abecedi od A do Z
-        expect(names).toEqual(sortedNames);  //za liste uvek koristimo toEqual, pita da li je u listama isti sadrzajj
+        expect(names.length).toBeGreaterThan(1);
+        const sortedNames = [...names].sort();
+        expect(names).toEqual(sortedNames);
     });
 
     test('by name from Z to A', async ({ homePage }) => {
@@ -29,7 +29,7 @@ test.describe('Sort products', () => {
 
         const prices = await homePage.getPrices();
         expect(prices.length).toBeGreaterThan(1);
-        const sortedPrices = [...prices].sort((a, b) => a - b); // a-b:od manjeg ka vecem   b-a: od veceg ka manjem
+        const sortedPrices = [...prices].sort((a, b) => a - b);
         expect(prices).toEqual(sortedPrices);
     });
 

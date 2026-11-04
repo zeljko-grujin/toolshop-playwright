@@ -4,10 +4,10 @@
 
 **Latest test report:** [zeljko-grujin.github.io/toolshop-playwright](https://zeljko-grujin.github.io/toolshop-playwright/)
 
-UI test automation for [Toolshop](https://practicesoftwaretesting.com), a demo e-commerce web app made for practicing test automation.
+UI and API test automation for [Toolshop](https://practicesoftwaretesting.com), a demo e-commerce web app made for practicing test automation.
 Written in TypeScript with Playwright, using the Page Object Model.
 
-> This is a learning project that I'm building step by step. New tests are added as I go.
+> A learning project: I built it step by step to learn Playwright with TypeScript.
 
 ## What is tested
 
@@ -24,13 +24,19 @@ Written in TypeScript with Playwright, using the Page Object Model.
 ## Tech stack
 
 - [Playwright Test](https://playwright.dev) with TypeScript
-- Page Object Model, page objects are given to tests as Playwright fixtures
-- Login is done once, in a setup project. Tests that need a logged-in user reuse the saved state (storageState)
-- Test data in one place (`test-data/`). The password is read from a local `.env` file that is not committed
-- Data-driven test: one search test runs for several search terms
-- API tests with Playwright's `request`, in their own project: no browser and no login setup
-- UI tests that also use the API: they get test data from the API or create it through the API
-- GitHub Actions for CI (also runs every morning), with the HTML report published to GitHub Pages
+- GitHub Actions (CI) and GitHub Pages (test report)
+
+## How it's built
+
+- **Page Object Model.** Locators and page actions live in page classes (`pages/`). When the site changes, I fix one class, not every test.
+- **Fixtures.** Tests get ready page objects from Playwright fixtures (`fixtures/pages.ts`), so there is no setup code in the tests.
+- **Login once.** A setup project logs in and saves the logged-in state (storageState). The account tests start already logged in and don't go through the login form again.
+- **No fixed waits.** Assertions use Playwright's `expect`, which retries on its own. After a search, sort or filter, the tests wait for the site's own "completed" marker.
+- **Test data in one place.** Accounts, products and the API address are in `test-data/`. The password comes from a local `.env` file that is not committed.
+- **Data-driven test.** One search test runs for several search terms.
+- **API tests.** Playwright's `request` sends requests straight to the API, without a browser. The API tests are in their own project, so they don't wait for the login setup.
+- **API and UI together.** One test checks that the home page shows the same products and prices as the API. Another one creates a new user through the API and logs in with it on the site, so it doesn't depend on an existing account.
+- **CI.** GitHub Actions runs the tests on every push, every morning and on demand. The HTML report is published to GitHub Pages.
 
 ## Project structure
 
@@ -64,6 +70,12 @@ Run the tests:
 npx playwright test
 ```
 
+Run only the API tests:
+
+```bash
+npx playwright test --project=api
+```
+
 Open the HTML report after a run:
 
 ```bash
@@ -80,6 +92,5 @@ Toolshop rejects logins from GitHub Actions servers. The login request returns 4
 That's why the login setup, the tests that need a logged-in user, the API login tests and the test that logs in with a user created through the API are skipped on CI and run only locally.
 The site is also behind Cloudflare, which sometimes blocks direct page loads from GitHub Actions (403), so the test that opens a category by its address is skipped on CI too.
 
-## Next steps
-
-- Fake API responses in UI tests (`page.route`)
+---
+Made by Željko Grujin

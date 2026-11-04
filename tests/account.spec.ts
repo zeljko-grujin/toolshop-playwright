@@ -10,7 +10,7 @@ test.describe('Guest', () => {
 
 test.describe('logged-in user', () => {
     test.skip(!!process.env.CI, 'Toolshop rejects logins from GitHub Actions servers (401)');
-    test.use({ storageState: 'playwright/.auth/user.json' }); //Svaki test u ovoj grupi krece sa tokenom iz fajla, dakle vec ulogovan.
+    test.use({ storageState: 'playwright/.auth/user.json' });
 
     test.beforeEach(async ({ accountPage }) => {
         await accountPage.goto();

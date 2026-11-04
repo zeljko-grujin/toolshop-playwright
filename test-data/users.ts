@@ -1,4 +1,4 @@
-export const users = {     //Objekat user: svi nalozi za testove
+export const users = {
     customer: {
         email: 'customer2@practicesoftwaretesting.com',
         password: process.env.CUSTOMER_PASSWORD!,
