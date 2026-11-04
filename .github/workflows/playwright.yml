@@ -6,7 +6,7 @@ on:
     branches: [ main, master ]
   workflow_dispatch:
   schedule:
-    - cron: '15 7 * * *'
+    - cron: '40 10 * * *'
       timezone: "Europe/Belgrade"
 jobs:
   test:
