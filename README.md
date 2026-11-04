@@ -36,7 +36,7 @@ Written in TypeScript with Playwright, using the Page Object Model.
 - **Data-driven test.** One search test runs for several search terms.
 - **API tests.** Playwright's `request` sends requests straight to the API, without a browser. The API tests are in their own project, so they don't wait for the login setup.
 - **API and UI together.** One test checks that the home page shows the same products and prices as the API. Another one creates a new user through the API and logs in with it on the site, so it doesn't depend on an existing account.
-- **CI.** GitHub Actions runs the tests on every push, every morning and on demand. The HTML report is published to GitHub Pages.
+- **CI.** GitHub Actions runs the tests on every push and on demand. The HTML report is published to GitHub Pages.
 
 ## Project structure
 
@@ -84,8 +84,9 @@ npx playwright show-report
 
 ## CI
 
-Tests run on GitHub Actions on every push and pull request to `main`, and every morning at 7:15 (Belgrade time).
+Tests run on GitHub Actions on every push and pull request to `main`.
 You can also start them by hand: **Actions → Playwright Tests → Run workflow**.
+I don't run them on a schedule. Toolshop is a public demo site where anyone can add or change products, so a scheduled run could fail because of someone else's data.
 After each run on `main`, the HTML report is published to GitHub Pages (link at the top). For a failed test the report has a screenshot, a video and a trace.
 
 Toolshop rejects logins from GitHub Actions servers. The login request returns 401 (I found it with the Playwright trace viewer).
