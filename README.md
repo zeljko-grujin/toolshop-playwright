@@ -90,7 +90,7 @@ I don't run them on a schedule. Toolshop is a public demo site where anyone can 
 After each run on `main`, the HTML report is published to GitHub Pages (link at the top). For a failed test the report has a screenshot, a video and a trace.
 
 Toolshop rejects logins from GitHub Actions servers. The login request returns 401 (I found it with the Playwright trace viewer).
-That's why the login setup, the tests that need a logged-in user, the API login tests and the test that logs in with a user created through the API are skipped on CI and run only locally.
+That's why the login setup, the valid login test, the tests that need a logged-in user, the API login tests and the test that logs in with a user created through the API are skipped on CI and run only locally.
 The site is also behind Cloudflare, which sometimes blocks direct page loads from GitHub Actions (403), so the test that opens a category by its address is skipped on CI too.
 
 ---

@@ -9,7 +9,7 @@ test.describe('Search', () => {
 
     for (const term of searchTerms) {
         test(`shows only products that match "${term}"`, async ({ homePage }) => {
-            await homePage.search(term)
+            await homePage.search(term);
             await expect(homePage.searchCaption).toHaveText(`Searched for: ${term}`);
 
             const names = await homePage.productNames.allInnerTexts(); //list of names
@@ -24,13 +24,13 @@ test.describe('Search', () => {
     test('shows a message when no product matches', async ({ homePage }) => {
         await homePage.search('Zeljko');
         await expect(homePage.searchCaption).toHaveText('Searched for: Zeljko');
-        await expect(homePage.noResults).toHaveText('There are no products found.')
+        await expect(homePage.noResults).toHaveText('There are no products found.');
         await expect(homePage.productNames).toHaveCount(0);
     });
 
-    test('ignore upper and lower case', async ({ homePage }) => {
+    test('ignores upper and lower case', async ({ homePage }) => {
         await homePage.search('PLIERS');
-        await expect(homePage.searchCaption).toHaveText('Searched for: PLIERS')
+        await expect(homePage.searchCaption).toHaveText('Searched for: PLIERS');
 
         const names = await homePage.productNames.allInnerTexts();
         expect(names.length).toBeGreaterThan(0);
@@ -41,7 +41,7 @@ test.describe('Search', () => {
 
     test('shows all products again after the search is reset', async ({ homePage }) => {
         await homePage.search('pliers');
-        await expect(homePage.searchCaption).toHaveText('Searched for: pliers')
+        await expect(homePage.searchCaption).toHaveText('Searched for: pliers');
         await homePage.resetSearch();
 
         await expect(homePage.searchCaption).toBeHidden();
